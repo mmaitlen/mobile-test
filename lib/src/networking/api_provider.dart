@@ -5,7 +5,7 @@ import '../models/seed.dart';
 
 class ApiProvider {
   Client client = Client();
-  final _baseUrl = "http://localhost:3000";
+  final _baseUrl = "http://192.168.86.21:3000";
 
   Future<Seed> getSeed() async {
     final response = await client.get("$_baseUrl/api/seed");

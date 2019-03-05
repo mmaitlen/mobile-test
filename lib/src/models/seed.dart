@@ -5,7 +5,7 @@ class Seed {
   Seed() {}
   Seed.fromJson(Map<String, dynamic> json) {
     _seed = json['seed'];
-    _expiresAt = json['expires_at'];
+    _expiresAt = DateTime.parse(json['expires_at']);
   }
 
   String get seed => _seed;

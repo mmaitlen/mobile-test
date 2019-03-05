@@ -18,7 +18,7 @@ class MockRepository extends Mock implements Repository {
 
 void main() {
   test('Get seed should return a alpha numberic string of 32 length', () {
-    final vm = QrCodeViewModel(new MockRepository());
+    final vm = QrCodeViewModel.usingRepo(new MockRepository());
     vm.seed.listen((s) {
       expect(s.seed , "224106acecedd99f187ca9707cf16cc2");
     });
@@ -26,7 +26,7 @@ void main() {
   });
 
   test('Ensure seed is of 32 length', () {
-    final vm = QrCodeViewModel(new MockRepository());
+    final vm = QrCodeViewModel.usingRepo(new MockRepository());
     vm.seed.listen((s) {
       expect(s.seed.length , 32);
     });
@@ -34,22 +34,24 @@ void main() {
   });
 
   test('Ensure QrImage is generated.', () async {
-    final vm = QrCodeViewModel(new MockRepository());
-    QrImage qrImage = await vm.generateQrCode();
-    expect(qrImage != null, true);
+    final vm = QrCodeViewModel.usingRepo(new MockRepository());
+    vm.qrCode.listen((q) {
+      expect(q != null , true);
+    });
+    vm.generateQrCode();
   });
 
   test('Validate valida QR code data has expired.', () async {
     //expired date of 3-3-2019
     final qrCodeData = "224106acecedd99f187ca9707cf16cc2.2019-03-03T16:57:53.109Z";
-    final vm = QrCodeViewModel(new MockRepository());
+    final vm = QrCodeViewModel.usingRepo(new MockRepository());
     expect(vm.isQrCodeValid(qrCodeData), false);
   });
 
   test('Validate valida QR code data has not expired.', () async {
     //future date of 3-3-2020
     final qrCodeData = "224106acecedd99f187ca9707cf16cc2.2020-03-03T16:57:53.109Z";
-    final vm = QrCodeViewModel(new MockRepository());
+    final vm = QrCodeViewModel.usingRepo(new MockRepository());
     expect(vm.isQrCodeValid(qrCodeData), true);
   });
 }

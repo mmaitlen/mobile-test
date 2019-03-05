@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_generator/src/views/generate_qr.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -28,7 +30,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   void _add() {
-
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => GenerateQrCode()),
+    );
   }
 
   @override

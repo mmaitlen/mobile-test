@@ -6,23 +6,37 @@ import 'package:qr_flutter/qr_flutter.dart';
 class QrCodeViewModel {
   var _repository;
   final _seedStream = PublishSubject<Seed>();
+  final _qrCodeStream = PublishSubject<QrImage>();
 
-  QrCodeViewModel(Repository repo) {
+
+  QrCodeViewModel() {
+    _repository = Repository();
+  }
+
+  QrCodeViewModel.usingRepo(Repository repo) {
     _repository = repo;
   }
 
   Observable<Seed> get seed => _seedStream.stream;
+  Observable<QrImage> get qrCode => _qrCodeStream.stream;
 
   getSeed() async {
     Seed seed = await _repository.getQRCodeSeed();
     _seedStream.sink.add(seed);
   }
 
-  Future<QrImage> generateQrCode() async {
+  generateQrCode() async {
     final _seed = await _repository.getQRCodeSeed();
     final _data = _seed.seed + "." + _seed.expiresAt.toString();
 
-    return QrImage(data: _data, size: 100.0);
+    _qrCodeStream.sink.add(QrImage(data: _data, size: 300.0));
+  }
+
+  Future<String> generateQrCodeData() async {
+    final _seed = await _repository.getQRCodeSeed();
+    final _data = _seed.seed + "." + _seed.expiresAt.toString();
+
+    return _data.toString();
   }
 
   bool isQrCodeValid(String qrCodeData) {
@@ -35,5 +49,8 @@ class QrCodeViewModel {
 
   dispose() {
     _seedStream.close();
+    _qrCodeStream.close();
   }
 }
+
+final viewModel = QrCodeViewModel();
