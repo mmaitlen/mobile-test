@@ -15,8 +15,8 @@ class QrScan extends StatefulWidget {
 
 class QrScanState extends State<QrScan> {
 
-  String barcode = "";
-  String iconPath = "images/ic_valid.png";
+  String barcode = '';
+  String iconPath = 'images/ic_valid.png';
 
   @override
   void initState() {
@@ -50,10 +50,10 @@ class QrScanState extends State<QrScan> {
       setState(() {
         if (viewModel.isQrCodeValid(barcode)) {
           this.barcode = viewModel.validQrCodeMsg;
-          this.iconPath = "images/ic_valid.png";
+          this.iconPath = 'images/ic_valid.png';
         } else {
           this.barcode = viewModel.invalidQrCodeMsg;
-          this.iconPath = "images/ic_invalid.png";
+          this.iconPath = 'images/ic_invalid.png';
         }
 
       });
