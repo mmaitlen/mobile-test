@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_generator/src/views/qr_scan.dart';
 import 'package:qr_generator/src/views/generate_qr.dart';
 
 
@@ -32,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _add() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => GenerateQrCode()),
+      MaterialPageRoute(builder: (context) => QrScan()),
     );
   }
 

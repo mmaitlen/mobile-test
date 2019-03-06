@@ -43,14 +43,14 @@ void main() {
 
   test('Validate valida QR code data has expired.', () async {
     //expired date of 3-3-2019
-    final qrCodeData = "224106acecedd99f187ca9707cf16cc2.2019-03-03T16:57:53.109Z";
+    final qrCodeData = "224106acecedd99f187ca9707cf16cc2|2019-03-03T16:57:53.109Z";
     final vm = QrCodeViewModel.usingRepo(new MockRepository());
     expect(vm.isQrCodeValid(qrCodeData), false);
   });
 
   test('Validate valida QR code data has not expired.', () async {
     //future date of 3-3-2020
-    final qrCodeData = "224106acecedd99f187ca9707cf16cc2.2020-03-03T16:57:53.109Z";
+    final qrCodeData = "224106acecedd99f187ca9707cf16cc2|2020-03-03T16:57:53.109Z";
     final vm = QrCodeViewModel.usingRepo(new MockRepository());
     expect(vm.isQrCodeValid(qrCodeData), true);
   });
