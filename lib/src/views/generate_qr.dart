@@ -26,17 +26,32 @@ class GenerateQrCodeState extends State<GenerateQrCode> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: StreamBuilder(
-            stream: viewModel.qrCode,
-            builder: (context, AsyncSnapshot<QrImage> snapshot) {
-              if (snapshot.hasData) {
-                return snapshot.data;
-              } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              }
-              return Center(child: CircularProgressIndicator());
-            },
+          padding: EdgeInsets.only(top:30.0),
+          child: Column(
+            children: <Widget>[
+              StreamBuilder(
+                stream: viewModel.qrCode,
+                builder: (context, AsyncSnapshot<QrImage> snapshot) {
+                  if (snapshot.hasData) {
+                    return snapshot.data;
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
+              StreamBuilder(
+                stream: viewModel.expiresAt,
+                builder: (context, AsyncSnapshot<String> snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(snapshot.data, style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5));
+                  } else if (snapshot.hasError) {
+                    return Text('');
+                  }
+                  return Text('');
+                },
+              ),
+            ],
           ),
         ),
       ),
